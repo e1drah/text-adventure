@@ -8,122 +8,68 @@ namespace text_adventure
 {
     internal class Program
     {
-        static int page = 0;
+        //Insert amount of pages in new string[]
+        static string[] pageText = new string[4];
+        static string[] pageLines;
 
-        static ConsoleKeyInfo playerInput = Console.ReadKey(true);
         static void Main(string[] args)
         {
-            bool keyPressed = false;
-            Console.WriteLine("Hello");
-            Console.ReadKey();
-            while(keyPressed != true)
-            {
-                switch (playerInput.Key)
-                {
-                    case ConsoleKey.D1:
-                        keyPressed = true;
-                        break;
-                    case ConsoleKey.D2:
-                        keyPressed = true;
-                        break;
-                    default:
-                        keyPressed = false;
-                        Console.WriteLine(playerInput.Key + " is not a vaild input");
-                        break;
-                }
+            // pageText initialization. Page formate: Line 1,2,3; option 1; option 2; option 1 page; option 2 page
+            pageText[0] = "Title Page; ; ;1;1";
+            pageText[1] = "This is page one;You can go to page two or page Three;Go to page two;Go to page Three;2;3";
+            pageText[2] = "This is page two;You can go to page one or page Three;Go to page one;Go to page Three;1;3";
+            pageText[3] = "This is page Three;You can go to page two or page one;Go to page two;Go to page one;2;1";
+            Update();
 
-            }
         }
-        //updates the text on screen based on player input
         static void Update()
         {
-            StoryText();
-
-        }
-        //Prints story text 
-        static void StoryText()
-        {
-            switch(page)
+            bool exit = false;
+            int pageNumber = 1;
+            while (exit != true)
             {
-                case 0:
-                    Console.WriteLine("Title page");
-                    break ;
-                case 1:
-                    Console.WriteLine("Page 1");
-                    break;
-                case 2:
-                    Console.WriteLine("Page 2");
-                    break;
-                case 3:
-                    Console.WriteLine("Page 3");
-                    break;
-                case 4:
-                    Console.WriteLine("Page 4");
-                    break;
-                case 5:
-                    Console.WriteLine("Page 5");
-                    break;
-                default :
-                    Console.WriteLine("Invaild Page");
-                    break;
-            }
-
-        }
-        static void ActionText()
-        {
-            switch(page)
-            {
-                case 0:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-
-                case 1:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-                case 2:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-                case 3:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-                case 4:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-                case 5:
-                    Console.WriteLine("1 - Go to page");
-                    Console.WriteLine("2 - Go to page");
-                    Console.WriteLine("3 - Save");
-                    Console.WriteLine("4 - Load ");
-                    Console.WriteLine("5 - Quit");
-                    break;
-                default:
-                    Console.WriteLine("Invaild Page");
-                    break;
+                //splits pageText into lines that can be printed
+                pageLines = pageText[pageNumber].Split(';');
+                //counts what line to print
+                int pageLine = 0;
+                // detirmins how many 
+                int pageLenth = pageLines.Count();
+                while ((pageLenth - 4) != pageLine)
+                {
+                    if (pageLine <= (pageLines.Length - 4))
+                    {
+                        Console.WriteLine(pageLines[pageLine]);
+                    }
+                    pageLine++;
+                }
+                OptionBox();
+                int option1 = Convert.ToInt32(pageLines[(pageLines.Length - 2)]);
+                int option2 = Convert.ToInt32(pageLines[(pageLines.Length - 1)]);
+                pageNumber = PlayerController(option1 , option2);
             }
         }
-        static void PlayerInput()
+        static void OptionBox()
         {
+            
+            Console.WriteLine(" ");
+            Console.WriteLine("1 - " + pageLines[(pageLines.Length - 4)]);
+            Console.WriteLine("2 - " + pageLines[(pageLines.Length - 3)]);
+        }
 
+        static int PlayerController(int option1, int option2)
+        {
+            ConsoleKeyInfo input;
+            input = Console.ReadKey(true);
+            bool aT = true;
+                switch (input.Key)
+                {
+                    case ConsoleKey.D1:
+                        return (option1);
+                    case ConsoleKey.D2:
+                        return (option2);
+                    default:
+                        return (option1);
+                }
         }
     }
 }
