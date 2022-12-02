@@ -56,7 +56,7 @@ namespace text_adventure
             Console.WriteLine("2 - " + pageLines[(pageLines.Length - 3)]);
         }
 
-        static int PlayerController(int option1, int option2)
+        static void PlayerController(int option1, int option2)
         {
             ConsoleKeyInfo input;
             input = Console.ReadKey(true);
@@ -64,11 +64,11 @@ namespace text_adventure
                 switch (input.Key)
                 {
                     case ConsoleKey.D1:
-                        return (option1);
+                        break;
                     case ConsoleKey.D2:
-                        return (option2);
+                        break;
                     default:
-                        return (option1);
+                        break; ;
                 }
         }
     }
